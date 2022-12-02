@@ -2,12 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addContact } from 'redux/phoneBookSlice';
+import { addContact } from 'redux/operationsAPI';
 import css from './ContactForm.module.scss';
 
 export const ContactForm = () => {
-  const [contact, setContact] = useState({ name: '', number: '' });
-  const contactsList = useSelector(state => state.phoneBook.contacts);
+  const [contact, setContact] = useState({ name: '', phone: '' });
+  const contactsList = useSelector(state => state.contacts.contacts.items);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
@@ -24,7 +24,7 @@ export const ContactForm = () => {
     }
 
     dispatch(addContact(contact));
-    setContact({ name: '', number: '' });
+    setContact({ name: '', phone: '' });
   };
 
   return (
@@ -51,8 +51,8 @@ export const ContactForm = () => {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={contact.number}
-          onChange={e => setContact({ ...contact, number: e.target.value })}
+          value={contact.phone}
+          onChange={e => setContact({ ...contact, phone: e.target.value })}
         />
       </label>
       <button type="submit" className={css.formSubmit__button}>

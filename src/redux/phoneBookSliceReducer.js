@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './operationsAPI';
 
-export const phoneBookSlice = createSlice({
+export const phoneBookSliceReducer = createSlice({
   name: 'contacts',
   initialState: {
     contacts: {
@@ -11,7 +11,6 @@ export const phoneBookSlice = createSlice({
     },
     filter: '',
   },
-
   extraReducers: {
     [fetchContacts.pending](state) {
       state.contacts.isLoading = true;
@@ -35,16 +34,18 @@ export const phoneBookSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = actions.payload;
     },
+    [deleteContact.pending](state) {
+      state.contacts.isLoading = true;
+    },
+    [deleteContact.fulfilled](state, actions) {
+      state.contacts.isLoading = false;
+      state.contacts.items = state.contacts.items.filter(
+        contact => contact.id !== actions.payload
+      );
+    },
+    [deleteContact.rejected](state, actions) {
+      state.contacts.isLoading = false;
+      state.contacts.error = actions.payload;
+    },
   },
 });
-
-export default phoneBookSlice.reducer;
-
-// {
-//   contacts: {
-//     items: [],
-//     isLoading: false,
-//     error: null
-//   },
-//   filter: ""
-// }
