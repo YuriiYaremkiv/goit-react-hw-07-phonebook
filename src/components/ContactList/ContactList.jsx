@@ -8,11 +8,12 @@ export const ContactList = ({ contacts }) => {
 
   return (
     <ul className={css.contactList}>
-      {contacts.map(({ id, name, number }) => {
+      {contacts.map(({ id, name, phone }) => {
         return (
           <li key={id} className={css.contactList__item}>
             <p>
-              {name}: {number}
+              <b>{name}:</b>
+              <br /> {phone}
             </p>
             <button
               className={css.contactList__button}
