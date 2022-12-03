@@ -9,7 +9,6 @@ export const phoneBookSliceReducer = createSlice({
       isLoading: false,
       error: null,
     },
-    filter: '',
   },
   extraReducers: {
     [fetchContacts.pending](state) {
@@ -27,7 +26,7 @@ export const phoneBookSliceReducer = createSlice({
       state.contacts.isLoading = true;
     },
     [addContact.fulfilled](state, actions) {
-      state.contacts.isLoading = true;
+      state.contacts.isLoading = false;
       state.contacts.items = [...state.contacts.items, actions.payload];
     },
     [addContact.rejected](state, actions) {

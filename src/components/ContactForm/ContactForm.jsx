@@ -1,14 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/operationsAPI';
 import css from './ContactForm.module.scss';
 
 export const ContactForm = () => {
   const [contact, setContact] = useState({ name: '', phone: '' });
-  const contactsList = useSelector(state => state.contacts.contacts.items);
   const dispatch = useDispatch();
+  const contactsList = useSelector(getContacts);
+
+  console.log(contactsList);
 
   const handleSubmit = e => {
     e.preventDefault();

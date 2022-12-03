@@ -1,18 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Progress } from '../components/Progress/Progress';
 import { ContactForm } from '../components/ContactForm/ContactForm';
 import { useEffect } from 'react';
 import { ContactList } from '../components/ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { fetchContacts } from '../redux/operationsAPI';
-import { filteredContactsUser } from 'redux/selectors';
+import { getFilter, getContacts, getIsLoading } from 'redux/selectors';
 import css from './app.module.scss';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState('');
-  const contacts = useSelector(state => state.contacts.contacts.items);
+  const filter = useSelector(getFilter);
+  const contacts = useSelector(getContacts);
+  const isLoading = useSelector(getIsLoading);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -31,11 +32,12 @@ export const App = () => {
     <div className={css.container}>
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm />
+      {isLoading && <Progress />}
       {contacts.length > 0 ? (
         <div>
           <h2>Contacts</h2>
           <div className={css.contacts__container}>
-            <Filter onChange={setFilter} />
+            <Filter />
             <ContactList contacts={contactsList} />
           </div>
         </div>
