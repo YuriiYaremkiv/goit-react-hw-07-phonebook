@@ -7,7 +7,7 @@ export const phoneBookSliceReducer = createSlice({
     contacts: {
       items: [],
       isLoading: false,
-      error: null,
+      error: '',
     },
   },
   extraReducers: {

@@ -10,8 +10,6 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
   const contactsList = useSelector(getContacts);
 
-  console.log(contactsList);
-
   const handleSubmit = e => {
     e.preventDefault();
 

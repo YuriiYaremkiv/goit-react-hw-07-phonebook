@@ -3,10 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Progress } from '../components/Progress/Progress';
 import { ContactForm } from '../components/ContactForm/ContactForm';
 import { useEffect } from 'react';
+import { Layout } from './Layout/Layout';
+import { Error } from './Error/Error';
 import { ContactList } from '../components/ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { fetchContacts } from '../redux/operationsAPI';
-import { getFilter, getContacts, getIsLoading } from 'redux/selectors';
+import {
+  getFilter,
+  getContacts,
+  getIsLoading,
+  getError,
+} from 'redux/selectors';
 import css from './app.module.scss';
 
 export const App = () => {
@@ -14,6 +21,7 @@ export const App = () => {
   const filter = useSelector(getFilter);
   const contacts = useSelector(getContacts);
   const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -32,15 +40,13 @@ export const App = () => {
     <div className={css.container}>
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm />
-      {isLoading && <Progress />}
-      {contacts.length > 0 ? (
-        <div>
-          <h2>Contacts</h2>
-          <div className={css.contacts__container}>
-            <Filter />
-            <ContactList contacts={contactsList} />
-          </div>
-        </div>
+      {isLoading && contacts.length === 0 && <Progress />}
+      {error && <Error message={error} />}
+      {contacts.length && !error ? (
+        <Layout progress={isLoading}>
+          <Filter />
+          <ContactList contacts={contactsList} />
+        </Layout>
       ) : null}
     </div>
   );

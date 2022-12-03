@@ -5,7 +5,6 @@ import css from './Filter.module.scss';
 export const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter.filter);
-  console.log(filter);
 
   const addFilter = e => {
     const value = e.target.value.trim().toLocaleLowerCase();
