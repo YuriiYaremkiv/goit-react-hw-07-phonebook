@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Progress } from '../Progress/Progress';
 import { Div } from './Layout.styled.js';
 import css from './Layout.module.scss';
@@ -14,4 +15,9 @@ export const Layout = ({ progress, children }) => {
       </div>
     </div>
   );
+};
+
+Layout.propTypes = {
+  progress: PropTypes.bool.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
